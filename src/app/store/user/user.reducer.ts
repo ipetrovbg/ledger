@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { AppState, IAppState } from '../../app.state';
+import { AppState, IAppState } from '../app.state';
 
 export const FETCHING_USER = 'FETCHING_USER';
 export const FETCHING_SUCCESS = 'FETCHING_SUCCESS';
@@ -15,8 +15,6 @@ export interface UserState {
     token: string;
   };
   login: {
-    email: string;
-    password: string;
     pending: boolean;
     error: boolean;
     errors: string[]

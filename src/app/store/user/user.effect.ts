@@ -11,7 +11,7 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 
 import { FETCHING_FAIL, FETCHING_SUCCESS, FETCHING_USER, LOGIN, UPDATE_USER } from './user.reducer';
-import { IAppState } from '../../app.state';
+import { IAppState } from '../app.state';
 
 @Injectable()
 export class UserEffects {
@@ -26,19 +26,20 @@ export class UserEffects {
 
   login(): Observable<Action> {
 
-    let buildUser = {
-      name: '',
-      email: '',
-      id: null,
-      token: ''
-    };
-
     return this.actions.ofType<any>(LOGIN)
       .mergeMap(action => {
           return this.http.post(this.api, action.payload)
             .map(res => res.json())
             .mergeMap(data => {
               const { token, user, success, message } = data;
+
+              let buildUser = {
+                name: '',
+                email: '',
+                id: null,
+                token: ''
+              };
+
               if (success) {
 
                 buildUser = user;

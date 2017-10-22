@@ -1,3 +1,34 @@
-<h1>
-  {{title}}
-</h1>
+<div kendoRippleContainer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 col-md-offset-4 card">
+        <div class="messages">
+          <div *ngIf="(user$ | async).user.id">
+            <p><strong>Name: </strong>{{ (user$ | async).user.name }}</p>
+            <p><strong>Email: </strong>{{ (user$ | async).user.email }}</p>
+          </div>
+          <div *ngIf="(user$ | async).login.error">
+            <p class="error" *ngFor="let error of (user$ | async).login.errors">
+              {{ error }}
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <form [formGroup]="form" (submit)="addTest($event)">
+            <div class="col-md-12 margin-vertical">
+              <input kendoTextBox type="text" placeholder="Email" formControlName="email"/>
+            </div>
+            <div class="col-md-12 margin-vertical">
+              <input kendoTextBox type="password" placeholder="Password" formControlName="password"/>
+            </div>
+            <div class="col-md-12 margin-vertical">
+
+              <app-button text="Login" icon="k-icon k-i-loading" iconSize="20"
+                          [loading]="(user$ | async).login.pending"></app-button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
