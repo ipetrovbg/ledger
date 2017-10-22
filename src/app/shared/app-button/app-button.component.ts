@@ -5,7 +5,6 @@ import { Component, Input } from '@angular/core';
   templateUrl: 'app-button.component.html'
 })
 export class AppButtonComponent {
-  @Input() icon: string;
   @Input() loading: boolean;
   @Input() iconSize: string;
   @Input() text: string;
