@@ -1,0 +1,8 @@
+<div class="router-content">
+  <div class="loading" *ngIf="(visible | async);">
+    <span class="k-icon k-i-loading" style="font-size: 50px;"></span>
+  </div>
+  <div class="content">
+    <router-outlet *ngIf="!(visible | async)"></router-outlet>
+  </div>
+</div>

@@ -1,0 +1,13 @@
+:host {
+  width: 200px;
+  height: calc(100vh - 50px);
+  position: relative;
+  background-color: #2e393f;
+  color: #fff;
+  float: left;
+  display: block;
+
+  -webkit-box-shadow: inset -25px 29px 49px -9px rgba(38,50,56,1);
+  -moz-box-shadow: inset -25px 29px 49px -9px rgba(38,50,56,1);
+  box-shadow: inset -25px 29px 49px -9px rgba(38,50,56,1);
+}

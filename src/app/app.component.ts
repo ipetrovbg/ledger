@@ -13,31 +13,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
   styleUrls: ['./app.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent implements OnInit {
-  user$: Observable<UserState>;
-  form: FormGroup;
+export class AppComponent {
+  isLogged: Observable<boolean>;
   constructor(
-    private store: Store<IAppState>,
-    private userService: UserService,
-    private fb: FormBuilder,
-  ) {}
-
-  ngOnInit() {
-    this.form = this.fb.group({
-      email: ['', Validators.required],
-      password: ['', Validators.required]
-    });
-    this.user$ = this.store.select(store => store.user);
-    this.user$.subscribe(user => user.user.id ?
-      this.form.patchValue({email: '', password: ''}) :
-      undefined);
-  }
-
-  addTest(e) {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (this.form.valid)
-      this.userService.login(this.form.value);
+    private store: Store<IAppState>
+  ) {
+    this.isLogged = store.select(store => !store.user.user.id);
   }
 }

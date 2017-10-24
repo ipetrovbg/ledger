@@ -1,0 +1,15 @@
+<div class="header flex">
+  <div class="container flex full-width">
+    <div class="row flex vertical-align full-width">
+      <div class="col-md-11">
+        <a routerLink="/home">Home</a> | <a *ngIf="isLogged | async" routerLink="/login">Login</a> |
+        <a routerLink="register">Register</a>
+        <a routerLink="layout/dashboard">Dashboard</a>
+      </div>
+      <div class="col-md-1">
+        <button class="pull-right" *ngIf="!(isLogged | async)" kendoButton (click)="store.dispatch({type: 'LOGOUT'})">Logout</button>
+      </div>
+    </div>
+  </div>
+  <div class="header-line"></div>
+</div>

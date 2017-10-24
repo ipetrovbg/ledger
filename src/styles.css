@@ -5,6 +5,9 @@
 }
 body {
   color: #656565;
+  padding: 0;
+  margin:0;
+  background-color: #f8f8f8;
 }
 .error {
   color: rgba(243,23,0,.7);
@@ -21,7 +24,36 @@ body {
   border:1px solid rgba(243,23,0,.5);
   border-radius: 2px;
   padding:15px;
+  margin-top: 15px;
+}
+.widget {
+  background-color: #fff;
+  padding: 20px;
+  -webkit-box-shadow: -1px 2px 4px 0px rgba(38,50,56,0.16);
+  -moz-box-shadow: -1px 2px 4px 0px rgba(38,50,56,0.16);
+  box-shadow: -1px 2px 4px 0px rgba(38,50,56,0.16);
 }
 .clearfix {
   clear: both;
+}
+.flex {
+  display: flex;
+}
+.flex .vertical-align {
+  align-items: center;
+}
+.full-width {
+  width:100%!important;
+}
+.pull-right {
+  float: right;
+}
+.pull-left {
+  float: left;
+}
+.overlay {
+  width: 100%;
+  background-color: #fff;
+  position: fixed;
+  height: 100vh;
 }

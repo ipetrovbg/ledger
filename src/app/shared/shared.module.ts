@@ -21,7 +21,7 @@ const kendoUIModules = [
 ];
 const imports = [
   ...kendoUIModules,
-  BrowserModule,
+  BrowserModule
 ];
 const declarations = [
   AppButtonComponent

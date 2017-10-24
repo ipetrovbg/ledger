@@ -1,0 +1,13 @@
+.header {
+  min-height: 50px;
+  background-color: #263238;
+  color: #fff;
+}
+.header .header-line {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+.header a {
+  color: #fff;
+}

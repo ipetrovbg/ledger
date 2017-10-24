@@ -1,0 +1,15 @@
+.router-content {
+  overflow: hidden;
+}
+.loading {
+  height: calc(100vh - 50px);
+  width:100%;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+.content {
+  padding: 5px;
+  margin:10px;
+}

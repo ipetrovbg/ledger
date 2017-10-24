@@ -1,11 +1,14 @@
 import { Action } from '@ngrx/store';
-import { AppState, IAppState } from '../app.state';
+import { AppState } from '../app.state';
 
 export const FETCHING_USER = 'FETCHING_USER';
 export const FETCHING_SUCCESS = 'FETCHING_SUCCESS';
 export const FETCHING_FAIL = 'FETCHING_FAIL';
 export const UPDATE_USER = 'UPDATE_USER';
 export const LOGIN = 'LOGIN';
+export const TOKEN_STORE = 'TOKEN_STORE';
+export const AUTO_LOGIN = 'AUTO_LOGIN';
+export const LOGOUT = 'LOGOUT';
 
 export interface UserState {
   user: {
