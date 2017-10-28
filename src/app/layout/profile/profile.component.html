@@ -1,0 +1,40 @@
+<div class="container" *ngIf="!(visible |  async)">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="widget">
+        <p><strong>ID: </strong> {{ (user | async).id }} </p>
+        <p><strong>Name: </strong> {{ (user | async).name }} </p>
+        <p><strong>Email: </strong> {{ (user | async).email }} </p>
+        <p><strong>Pay day: </strong> {{ (settings | async)?.payDay }}</p>
+      </div>
+    </div>
+    <div class="col-md-7">
+      <div class="widget">
+        <form [formGroup]="form" novalidate (submit)="onSave()">
+          <div class="row">
+            <div class="col-md-12 margin-vertical">
+              <p><i><strong>You can set your own JSON settings</strong></i></p>
+              <p><i>ex: <strong>{{ '{' }} "payDay": 5 {{ '}' }}</strong></i></p>
+              <p><i>This means that your monthly pay day is on every 5 date</i></p>
+              <textarea cols="100" rows="5" kendoTextBox formControlName="settings" placeholder="JSON Settings"></textarea>
+              <p class="error" *ngIf="form.getError('required')">{{ form.getError('required') }}</p>
+              <p class="error" *ngIf="form.getError('jsonError')">{{ form.getError('jsonError') }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 margin-vertical">
+
+              <app-button
+                text="Save"
+                [loading]="loading | async"
+                [disabled]="form.invalid || !form.dirty"
+              ></app-button>
+
+            </div>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

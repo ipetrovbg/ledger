@@ -11,3 +11,22 @@
   -moz-box-shadow: inset -25px 29px 49px -9px rgba(38,50,56,1);
   box-shadow: inset -25px 29px 49px -9px rgba(38,50,56,1);
 }
+.side-navigation {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.side-navigation li {
+  list-style: none;
+  margin: 0;
+}
+.side-navigation li a {
+  padding: 20px;
+  display: block;
+  border-bottom:1px solid #35444c;
+  text-decoration: none;
+  color: #fff;
+}
+.side-navigation li:hover a {
+  background-color: #35444c;
+}

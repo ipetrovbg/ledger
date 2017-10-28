@@ -1,14 +1,15 @@
 import { Action } from '@ngrx/store';
 import { AppState } from '../app.state';
 
-export const FETCHING_USER = 'FETCHING_USER';
 export const FETCHING_SUCCESS = 'FETCHING_SUCCESS';
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
+export const FETCH_SETTINGS = 'FETCH_SETTINGS';
+export const FETCHING_USER = 'FETCHING_USER';
 export const FETCHING_FAIL = 'FETCHING_FAIL';
 export const UPDATE_USER = 'UPDATE_USER';
-export const LOGIN = 'LOGIN';
-export const TOKEN_STORE = 'TOKEN_STORE';
 export const AUTO_LOGIN = 'AUTO_LOGIN';
 export const LOGOUT = 'LOGOUT';
+export const LOGIN = 'LOGIN';
 
 export interface UserState {
   user: {
@@ -17,6 +18,7 @@ export interface UserState {
     email: string;
     token: string;
   };
+  settings: string;
   login: {
     pending: boolean;
     error: boolean;
@@ -45,6 +47,10 @@ export function userReducer (state: UserState = AppState.user, action: ExtendedA
       return { ...state, login: { ...state.login, error: true, errors: [...action.payload] } };
     case FETCHING_USER:
       return { ...state, login: { ...state.login, pending: action.payload } };
+    case UPDATE_SETTINGS:
+      return { ...state, settings: action.payload };
+    case LOGOUT:
+      return { ...state, user: AppState.user, settings: AppState.user.settings, login: AppState.user.login };
     default:
       return state;
   }

@@ -1,13 +1,18 @@
 <div class="header flex">
   <div class="container flex full-width">
     <div class="row flex vertical-align full-width">
-      <div class="col-md-11">
-        <a routerLink="/home">Home</a> | <a *ngIf="isLogged | async" routerLink="/login">Login</a> |
-        <a routerLink="register">Register</a>
-        <a routerLink="layout/dashboard">Dashboard</a>
+      <div class="col-md-6">
+        <a routerLink="/home">Home</a>
+        <a *ngIf="isLogged | async" routerLink="/login">| Login</a>
       </div>
-      <div class="col-md-1">
-        <button class="pull-right" *ngIf="!(isLogged | async)" kendoButton (click)="store.dispatch({type: 'LOGOUT'})">Logout</button>
+      <div class="col-md-4">
+        <span *ngIf="loading | async" class="k-icon k-i-loading" style="font-size: 30px;"></span>
+      </div>
+      <div class="col-md-2">
+        <div class="pull-right">
+          <a routerLink="/layout/profile"><span>{{ (userName | async) }}</span></a>
+          <button *ngIf="!(isLogged | async)" kendoButton (click)="store.dispatch({type: 'LOGOUT'})">Logout</button>
+        </div>
       </div>
     </div>
   </div>

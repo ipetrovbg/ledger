@@ -8,8 +8,13 @@ import {
   DateInputsModule,
   DatePickerModule
 } from '@progress/kendo-angular-dateinputs';
+import { DialogModule } from '@progress/kendo-angular-dialog';
+
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { RippleModule } from '@progress/kendo-angular-ripple';
+import { RippleDirective } from 'angular-ripple-effect/ripple.directive';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const kendoUIModules = [
   ButtonsModule,
@@ -18,13 +23,17 @@ const kendoUIModules = [
   DatePickerModule,
   RippleModule,
   InputsModule,
+  DialogModule,
 ];
+
 const imports = [
   ...kendoUIModules,
-  BrowserModule
+  CommonModule,
+  ReactiveFormsModule
 ];
 const declarations = [
-  AppButtonComponent
+  AppButtonComponent,
+  RippleDirective,
 ];
 const exports = [
   ...imports,
@@ -37,5 +46,4 @@ const exports = [
   providers: [],
   exports: exports
 })
-export class SharedModule {
-}
+export class SharedModule {}

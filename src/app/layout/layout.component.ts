@@ -1,7 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { IAppState } from '../store/app.state';
 import { Store } from '@ngrx/store';
-import { CLOSE_SIDEBAR, OPEN_SIDEBAR, SidebarState } from '../store/ui/ui.reducer';
+import { CLOSE_SIDEBAR, OPEN_SIDEBAR, ROUTE_LOADING, SidebarState } from '../store/ui/ui.reducer';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import { Subscription } from "rxjs/Subscription";
@@ -14,7 +14,7 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
-  animate: Observable<SidebarState>;
+  loader: Observable<boolean>;
 
   visible: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
@@ -22,22 +22,19 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private store: Store<IAppState>
   ) {
-    this.animate = store.select(state => state.ui.sidebar.state);
+    this.loader = store.select(state => state.ui.route.loading);
   }
 
   ngOnInit() {
     this.store.dispatch({type: OPEN_SIDEBAR});
+    this.store.dispatch({type: ROUTE_LOADING, payload: true});
   }
 
-  ngAfterViewInit() {
-    this.subscription.add(this.store.subscribe(state => {
-      setTimeout(() => {
-        this.visible.next((state.ui.sidebar.state !== 'open'));
-      }, 900);
-    }));
-  }
+  ngAfterViewInit() { this.store.dispatch({type: ROUTE_LOADING, payload: false}); }
+
   ngOnDestroy() {
     this.store.dispatch({type: CLOSE_SIDEBAR});
+    this.store.dispatch({type: ROUTE_LOADING, payload: false});
     this.subscription.unsubscribe();
   }
 

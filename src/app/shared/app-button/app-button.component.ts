@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
 })
 export class AppButtonComponent {
   @Input() loading: boolean;
-  @Input() iconSize: string;
+  @Input() iconSize: string = '20';
   @Input() text: string;
+  @Input() disabled: boolean;
 }

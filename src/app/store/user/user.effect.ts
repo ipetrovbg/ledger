@@ -12,19 +12,15 @@ import { Action, Store } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 
 import {
-  AUTO_LOGIN, FETCHING_FAIL, FETCHING_SUCCESS, FETCHING_USER, LOGIN, LOGOUT, UPDATE_USER
+  AUTO_LOGIN, FETCH_SETTINGS, FETCHING_FAIL, FETCHING_SUCCESS, FETCHING_USER, LOGIN, LOGOUT, UPDATE_SETTINGS,
+  UPDATE_USER
 } from './user.reducer';
 
 import { appConfig } from '../../app.config';
 import { Router } from '@angular/router';
 import { User } from './user.model';
-import { IAppState } from "../app.state";
-
-export function getState(store: any) {
-  let _state: IAppState;
-  store.take(1).subscribe(o => _state = o);
-  return _state;
-}
+import { getState, IAppState } from '../app.state';
+import { CLOSE_SIDEBAR, OPEN_SIDEBAR, UI_LOADING } from "../ui/ui.reducer";
 
 @Injectable()
 export class UserEffects {
@@ -32,6 +28,7 @@ export class UserEffects {
   @Effect() login$: Observable<Action> = this.login();
   @Effect() autoLogin$: Observable<Action> = this.autoLogin();
   @Effect() logout$: Observable<Action> = this.logout();
+  @Effect() fetchSettings$: Observable<Action> = this.fetchSettings();
 
   constructor (
     private http: Http,
@@ -87,7 +84,6 @@ export class UserEffects {
 
     return this.actions.ofType<any>(AUTO_LOGIN)
       .mergeMap(() => {
-      console.log('autologin')
         const token = localStorage.getItem('token');
 
         if (!getState(this.store).user.user.id)
@@ -121,6 +117,32 @@ export class UserEffects {
           return [({ type: UPDATE_USER, payload: user })];
         }
         return [({ type: UPDATE_USER, payload: user })];
+      });
+  }
+
+  fetchSettings() {
+    return this.actions.ofType<any>(FETCH_SETTINGS)
+      .mergeMap(action => {
+        return this.http.get(`${appConfig.api}/users/${ getState(this.store).user.user.id}/settings`)
+          .map(res => res.json())
+          .mergeMap(response => {
+            let additionAction: Action = ({type: OPEN_SIDEBAR});
+            if (response.settings) {
+              let settings;
+              try {
+                settings = JSON.parse(response.settings);
+              } catch (e) {}
+              additionAction = (settings.sidebar && settings.sidebar === 'open') ? ({type: OPEN_SIDEBAR}) : ({type: CLOSE_SIDEBAR});
+            }
+            return [
+              additionAction,
+              ({type: UPDATE_SETTINGS, payload: response.settings }),
+              ({type: UI_LOADING, payload: false })
+            ];
+          });
+      }).catch(err => {
+        this.store.dispatch({type: UI_LOADING, payload: false });
+        return of({ type: 'EMPTY' });
       });
   }
 
