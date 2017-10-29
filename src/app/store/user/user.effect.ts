@@ -20,7 +20,7 @@ import { appConfig } from '../../app.config';
 import { Router } from '@angular/router';
 import { User } from './user.model';
 import { getState, IAppState } from '../app.state';
-import { CLOSE_SIDEBAR, OPEN_SIDEBAR, UI_LOADING } from "../ui/ui.reducer";
+import { CLOSE_SIDEBAR, OPEN_SIDEBAR, UI_LOADING } from '../ui/ui.reducer';
 
 @Injectable()
 export class UserEffects {
@@ -114,28 +114,20 @@ export class UserEffects {
         if (response.success) {
           user.attach(response.response);
           user.token = token;
-          return [({ type: UPDATE_USER, payload: user })];
+          return [({ type: UPDATE_USER, payload: user }), ({type: FETCH_SETTINGS})];
         }
         return [({ type: UPDATE_USER, payload: user })];
       });
   }
 
   fetchSettings() {
+    console.log('fetch settings');
     return this.actions.ofType<any>(FETCH_SETTINGS)
       .mergeMap(action => {
         return this.http.get(`${appConfig.api}/users/${ getState(this.store).user.user.id}/settings`)
           .map(res => res.json())
           .mergeMap(response => {
-            let additionAction: Action = ({type: OPEN_SIDEBAR});
-            if (response.settings) {
-              let settings;
-              try {
-                settings = JSON.parse(response.settings);
-              } catch (e) {}
-              additionAction = (settings.sidebar && settings.sidebar === 'open') ? ({type: OPEN_SIDEBAR}) : ({type: CLOSE_SIDEBAR});
-            }
             return [
-              additionAction,
               ({type: UPDATE_SETTINGS, payload: response.settings }),
               ({type: UI_LOADING, payload: false })
             ];

@@ -5,9 +5,9 @@ import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
 import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
-import { PROFILE_FORM_LOADING, PROFILE_SUBMIT } from "../../store/pages/pages.reducer";
-import { FETCH_SETTINGS } from "../../store/user/user.reducer";
-import { UI_LOADING } from "../../store/ui/ui.reducer";
+import { PROFILE_FORM_LOADING, PROFILE_SUBMIT } from '../../store/pages/pages.reducer';
+import { FETCH_SETTINGS } from '../../store/user/user.reducer';
+import { UI_LOADING } from '../../store/ui/ui.reducer';
 
 @Component({
   selector: 'app-profile',
@@ -38,10 +38,6 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
   }
 
   ngOnInit() {
-    if (!getState(this.store).user.settings) {
-      this.store.dispatch({type: FETCH_SETTINGS });
-      this.store.dispatch({type: UI_LOADING, payload: true });
-    }
 
     this.form = this.fb.group({
       settings: ['', Validators.required]
