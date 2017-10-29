@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { AppButtonComponent } from './app-button/app-button.component';
 
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
@@ -8,6 +7,7 @@ import {
   DateInputsModule,
   DatePickerModule
 } from '@progress/kendo-angular-dateinputs';
+import { GridModule } from '@progress/kendo-angular-grid';
 import { DialogModule } from '@progress/kendo-angular-dialog';
 
 import { InputsModule } from '@progress/kendo-angular-inputs';
@@ -24,6 +24,7 @@ const kendoUIModules = [
   RippleModule,
   InputsModule,
   DialogModule,
+  GridModule,
 ];
 
 const imports = [
@@ -35,7 +36,7 @@ const declarations = [
   AppButtonComponent,
   RippleDirective,
 ];
-const exports = [
+const exportedModules = [
   ...imports,
   ...declarations,
 ];
@@ -44,6 +45,6 @@ const exports = [
   declarations: declarations,
   imports: imports,
   providers: [],
-  exports: exports
+  exports: exportedModules
 })
 export class SharedModule {}
