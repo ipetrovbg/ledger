@@ -15,6 +15,7 @@ import { RippleModule } from '@progress/kendo-angular-ripple';
 import { RippleDirective } from 'angular-ripple-effect/ripple.directive';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HotkeyService } from './services/hotkey.service';
 
 const kendoUIModules = [
   ButtonsModule,
@@ -44,7 +45,9 @@ const exportedModules = [
 @NgModule({
   declarations: declarations,
   imports: imports,
-  providers: [],
+  providers: [
+    HotkeyService
+  ],
   exports: exportedModules
 })
 export class SharedModule {}

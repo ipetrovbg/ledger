@@ -40,6 +40,7 @@
     "@progress/kendo-theme-default": "^2.43.1",
     "@progress/kendo-theme-material": "^0.2.3",
     "angular-ripple-effect": "0.0.3",
+    "angular2-hotkeys": "^2.0.3",
     "bootstrap-grid": "^2.0.1",
     "core-js": "^2.4.1",
     "moment": "^2.19.1",

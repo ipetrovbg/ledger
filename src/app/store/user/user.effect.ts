@@ -121,9 +121,11 @@ export class UserEffects {
   }
 
   fetchSettings() {
-    console.log('fetch settings');
     return this.actions.ofType<any>(FETCH_SETTINGS)
-      .mergeMap(action => {
+      .mergeMap(() => {
+        if (!getState(this.store).user.user.id)
+          return [({type: 'EMPTY'})];
+
         return this.http.get(`${appConfig.api}/users/${ getState(this.store).user.user.id}/settings`)
           .map(res => res.json())
           .mergeMap(response => {
@@ -133,6 +135,7 @@ export class UserEffects {
             ];
           });
       }).catch(err => {
+        console.log('FETCH_SETTINGS error', err);
         this.store.dispatch({type: UI_LOADING, payload: false });
         return of({ type: 'EMPTY' });
       });

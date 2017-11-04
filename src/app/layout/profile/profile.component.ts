@@ -1,13 +1,14 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { getState, IAppState } from '../../store/app.state';
-import { Store } from '@ngrx/store';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { Subscription } from 'rxjs/Subscription';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Observable } from 'rxjs/Observable';
-import { FormGroup, FormBuilder, Validators, ValidationErrors } from '@angular/forms';
+
+import { Store } from '@ngrx/store';
+
+import { IAppState } from '../../store/app.state';
 import { PROFILE_FORM_LOADING, PROFILE_SUBMIT } from '../../store/pages/pages.reducer';
-import { FETCH_SETTINGS } from '../../store/user/user.reducer';
-import { UI_LOADING } from '../../store/ui/ui.reducer';
 
 @Component({
   selector: 'app-profile',
@@ -23,19 +24,13 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
   settings: Observable<string>;
 
   form: FormGroup;
+
   public opened: boolean = false;
+
   constructor(
     private store: Store<IAppState>,
     private fb: FormBuilder
   ) {}
-
-  public close(status) {
-    this.opened = false;
-  }
-
-  public open() {
-    this.opened = true;
-  }
 
   ngOnInit() {
 

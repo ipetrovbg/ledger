@@ -13,6 +13,7 @@ import { CLOSE_SIDEBAR, OPEN_SIDEBAR, ROUTE_LOADING, UI_LOADING } from '../store
 import { SharedModule } from '../shared/shared.module';
 import { LedgerComponent } from '../ledger/ledger.component';
 import { FETCH_SETTINGS } from "../store/user/user.reducer";
+import { HotkeyService } from '../shared/services/hotkey.service';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { FETCH_SETTINGS } from "../store/user/user.reducer";
 export class LayoutModule {
   constructor(
     private router: Router,
-    private store: Store<IAppState>
+    private store: Store<IAppState>,
+    private hotkeys: HotkeyService
   ) {
     router.events.subscribe(route => {
       if ((route instanceof GuardsCheckStart) && (route.url.indexOf('/layout') > -1)) {
@@ -56,5 +58,7 @@ export class LayoutModule {
         this.store.dispatch({type: ROUTE_LOADING, payload: true});
       }
     });
+
+    this.hotkeys.registerGeneralShortcuts();
   }
 }

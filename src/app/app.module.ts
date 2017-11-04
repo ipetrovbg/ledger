@@ -9,6 +9,8 @@ import { Store, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
+import { HotkeyModule } from 'angular2-hotkeys';
+
 import { appRoutes } from './app-routes';
 
 import { AppComponent } from './app.component';
@@ -26,8 +28,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { AUTO_LOGIN, userReducer } from './store/user/user.reducer';
 import { OPEN_SIDEBAR, ROUTE_LOADING, uiReducer } from './store/ui/ui.reducer';
 import { IAppState } from './store/app.state';
-import { pagesReducer } from "./store/pages/pages.reducer";
-import { ProfileEffects } from "./store/pages/profile/profile.effects";
+import { pagesReducer } from './store/pages/pages.reducer';
+import { ProfileEffects } from './store/pages/profile/profile.effects';
 
 @NgModule({
   declarations: [
@@ -49,7 +51,8 @@ import { ProfileEffects } from "./store/pages/profile/profile.effects";
       ProfileEffects,
     ]),
     SharedModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    HotkeyModule.forRoot()
   ],
   providers: [
     UserService,
