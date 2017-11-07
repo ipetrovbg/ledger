@@ -7,8 +7,11 @@ import { Observable } from 'rxjs/Observable';
 
 import { Store } from '@ngrx/store';
 
+import * as moment from 'moment';
+
 import { IAppState } from '../../store/app.state';
 import { PROFILE_FORM_LOADING, PROFILE_SUBMIT } from '../../store/pages/pages.reducer';
+import { BaseHrefWebpackPlugin } from "@angular/cli/lib/base-href-webpack";
 
 @Component({
   selector: 'app-profile',
@@ -22,6 +25,12 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
   loading: Observable<boolean>;
   user: Observable<any>;
   settings: Observable<string>;
+  remainingDays: Observable<any>;
+  /**
+   * internal state
+   * @type {BehaviorSubject}
+   */
+  state: BehaviorSubject<any> = new BehaviorSubject({});
 
   form: FormGroup;
 
@@ -59,9 +68,26 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
     });
 
     this.settings.debounceTime(1000)
-      .subscribe(settings => {
+      .subscribe((settings: any) => {
       this.form.setValue({settings: JSON.stringify(settings)});
       this.form.markAsPristine();
+    });
+
+    /**
+     * create re selector
+     * @type {Observable<number>}
+     */
+    this.remainingDays = Observable.combineLatest(this.settings)
+      .map(([settings]) => ({settings}))
+      .map((response: any) => {
+        const { settings } = response;
+
+        const day = moment();
+        const payDay = settings.payDay ? settings.payDay : 1;
+
+        return (payDay > (+new Date().getDate() + 1)) ?
+          Math.abs(day.diff(moment([new Date().getFullYear(), new Date().getMonth(), payDay]), 'days')) + 1 :
+          (+moment().endOf('month').format('D') - (+moment(day).format('D'))) + payDay;
     });
 
   }

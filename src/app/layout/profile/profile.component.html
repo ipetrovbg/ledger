@@ -6,6 +6,7 @@
         <p><strong>Name: </strong> {{ (user | async).name }} </p>
         <p><strong>Email: </strong> {{ (user | async).email }} </p>
         <p><strong>Pay day: </strong> {{ (settings | async)?.payDay }}</p>
+        <p><strong>Remaining days to new sallery: </strong> {{ remainingDays | async }}</p>
       </div>
     </div>
     <div class="col-md-7">
