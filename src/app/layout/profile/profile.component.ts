@@ -11,7 +11,6 @@ import * as moment from 'moment';
 
 import { IAppState } from '../../store/app.state';
 import { PROFILE_FORM_LOADING, PROFILE_SUBMIT } from '../../store/pages/pages.reducer';
-import { BaseHrefWebpackPlugin } from "@angular/cli/lib/base-href-webpack";
 
 @Component({
   selector: 'app-profile',
