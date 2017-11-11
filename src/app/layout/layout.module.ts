@@ -44,12 +44,6 @@ export class LayoutModule {
           if (!getState(this.store).user.settings) {
             this.store.dispatch({ type: FETCH_SETTINGS });
             this.store.dispatch({ type: UI_LOADING, payload: true });
-          } else {
-            const settings = JSON.parse(getState(this.store).user.settings);
-            // console.log(getState(this.store).user.settings);
-            (settings.sidebar && settings.sidebar === 'open') ?
-              this.store.dispatch({ type: OPEN_SIDEBAR }) :
-              this.store.dispatch({ type: CLOSE_SIDEBAR });
           }
         }, 500);
       }

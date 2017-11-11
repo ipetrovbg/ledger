@@ -13,8 +13,7 @@ import { Action, Store } from '@ngrx/store';
 import { getState, IAppState } from '../../app.state';
 import { PROFILE_FORM_LOADING, PROFILE_SUBMIT } from '../pages.reducer';
 import { appConfig } from '../../../app.config';
-import { UPDATE_SETTINGS } from "../../user/user.reducer";
-import { CLOSE_SIDEBAR, OPEN_SIDEBAR } from '../../ui/ui.reducer';
+import { UPDATE_SETTINGS } from '../../user/user.reducer';
 
 @Injectable()
 export class ProfileEffects {
@@ -37,18 +36,9 @@ export class ProfileEffects {
         return this.http.post(`${appConfig.api}/users/${getState(this.store).user.user.id}/settings`, {settings: action.payload})
           .map(r => r.json())
           .mergeMap(response => {
-            let settings;
-            try {
-              settings = JSON.parse(response.settings);
-            } catch (e) {}
-            let additionalAction = (settings.sidebar === 'open') ? ({type: OPEN_SIDEBAR}) : ({type: CLOSE_SIDEBAR});
-            if (!settings.sidebar)
-              additionalAction = ({type: 'EMPTY'});
-
             return [
-              additionalAction,
               ({ type: PROFILE_FORM_LOADING, payload: false }),
-              ({ type: UPDATE_SETTINGS, payload: response.settings })
+              ({ type: UPDATE_SETTINGS, payload: { settings: response.settings, id: getState(this.store).user.user.id }})
             ];
           }).catch(err => of({ type: PROFILE_FORM_LOADING, payload: false }));
       });

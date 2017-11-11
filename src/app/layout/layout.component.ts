@@ -26,14 +26,12 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.store.dispatch({type: OPEN_SIDEBAR});
     this.store.dispatch({type: ROUTE_LOADING, payload: true});
   }
 
   ngAfterViewInit() { this.store.dispatch({type: ROUTE_LOADING, payload: false}); }
 
   ngOnDestroy() {
-    this.store.dispatch({type: CLOSE_SIDEBAR});
     this.store.dispatch({type: ROUTE_LOADING, payload: false});
     this.subscription.unsubscribe();
   }

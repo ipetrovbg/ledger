@@ -11,6 +11,8 @@ import 'rxjs/add/operator/take';
 import { Action, Store } from '@ngrx/store';
 import { Actions, Effect } from '@ngrx/effects';
 
+import { Socket } from 'ng-socket-io';
+
 import {
   AUTO_LOGIN, FETCH_SETTINGS, FETCHING_FAIL, FETCHING_SUCCESS, FETCHING_USER, LOGIN, LOGOUT, UPDATE_SETTINGS,
   UPDATE_USER
@@ -34,10 +36,13 @@ export class UserEffects {
     private http: Http,
     private actions: Actions<any>,
     private router: Router,
-    private store: Store<IAppState>
-  ) {}
+    private store: Store<IAppState>,
+    private socket: Socket
+  ) {
+    socket.on(UPDATE_SETTINGS, data => store.dispatch(data));
+  }
 
-  login (): Observable<Action> {
+  private login (): Observable<Action> {
 
     return this.actions.ofType<any>(LOGIN)
       .mergeMap(action => {
@@ -71,7 +76,7 @@ export class UserEffects {
       );
   }
 
-  logout(): Observable<Action> {
+  private logout(): Observable<Action> {
     return this.actions.ofType<any>(LOGOUT)
       .mergeMap(() => {
         localStorage.removeItem('token');
@@ -80,10 +85,10 @@ export class UserEffects {
       });
   }
 
-  autoLogin (): Observable<Action> {
-
+  private autoLogin (): Observable<Action> {
     return this.actions.ofType<any>(AUTO_LOGIN)
       .mergeMap(() => {
+        this.socket.emit('test', { test: 'test message' });
         const token = localStorage.getItem('token');
 
         if (!getState(this.store).user.user.id)
@@ -93,7 +98,7 @@ export class UserEffects {
       });
   }
 
-  getUserByTokenAndCreateAction(token): Observable<Action> {
+  private getUserByTokenAndCreateAction(token): Observable<Action> {
     return this.http.get(`${appConfig.api}/authenticate/${token}`)
       .map(res => res.json())
       .mergeMap(responseToken => {
@@ -106,7 +111,7 @@ export class UserEffects {
       });
   }
 
-  getUserAndDispatch(id, token): Observable<Action> {
+  private getUserAndDispatch(id, token): Observable<Action> {
     return this.http.get(`${appConfig.api}/users/${id}`)
       .map(res => res.json())
       .mergeMap(response => {
@@ -120,7 +125,7 @@ export class UserEffects {
       });
   }
 
-  fetchSettings() {
+  private fetchSettings() {
     return this.actions.ofType<any>(FETCH_SETTINGS)
       .mergeMap(() => {
         if (!getState(this.store).user.user.id)
@@ -130,7 +135,7 @@ export class UserEffects {
           .map(res => res.json())
           .mergeMap(response => {
             return [
-              ({type: UPDATE_SETTINGS, payload: response.settings }),
+              ({type: UPDATE_SETTINGS, payload: { settings: response.settings, id: getState(this.store).user.user.id }}),
               ({type: UI_LOADING, payload: false })
             ];
           });

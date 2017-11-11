@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { AppState } from '../app.state';
+import { AppState, getState } from '../app.state';
 
 export const FETCHING_SUCCESS = 'FETCHING_SUCCESS';
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
@@ -48,11 +48,12 @@ export function userReducer (state: UserState = AppState.user, action: ExtendedA
     case FETCHING_USER:
       return { ...state, login: { ...state.login, pending: action.payload } };
     case UPDATE_SETTINGS:
-      return { ...state, settings: action.payload };
+      if ((+state.user.id) === (+action.payload.id))
+        return { ...state, settings: action.payload.settings };
+      else return state;
     case LOGOUT:
       return { ...state, user: AppState.user, settings: AppState.user.settings, login: AppState.user.login };
     default:
       return state;
   }
 }
-

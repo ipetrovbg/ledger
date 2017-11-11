@@ -33,8 +33,6 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
 
   form: FormGroup;
 
-  public opened: boolean = false;
-
   constructor(
     private store: Store<IAppState>,
     private fb: FormBuilder
@@ -58,6 +56,10 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
 
     this.user = this.store.select(state => state.user.user);
     this.loading = this.store.select(state => state.pages.profile.jsonForm.loading);
+    this.loading.subscribe(loading => {
+      if (!loading)
+        this.markForm();
+    });
     this.settings = this.store.select(state => {
       try {
         return JSON.parse(state.user.settings);
@@ -68,8 +70,8 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
 
     this.settings.debounceTime(1000)
       .subscribe((settings: any) => {
-      this.form.setValue({settings: JSON.stringify(settings)});
-      this.form.markAsPristine();
+        this.form.patchValue({settings: JSON.stringify(settings, undefined, 5)}, {emitEvent: false});
+          this.markForm();
     });
 
     /**
@@ -93,11 +95,9 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
 
   onSave() {
     this.store.dispatch({ type: PROFILE_FORM_LOADING, payload: true });
-    if (this.form.invalid) {
-      setTimeout(() => this.store.dispatch({ type: PROFILE_FORM_LOADING, payload: false }), 300);
-      return;
-    }
-    this.store.dispatch({ type: PROFILE_SUBMIT, payload: this.form.get('settings').value });
+    this.form.invalid ?
+      this.store.dispatch({ type: PROFILE_FORM_LOADING, payload: false }) :
+      this.store.dispatch({ type: PROFILE_SUBMIT, payload: this.form.get('settings').value });
   }
 
   ngAfterViewInit() {
@@ -109,4 +109,8 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
     this.subscription.unsubscribe();
   }
 
+  private markForm() {
+    this.form.markAsUntouched();
+    this.form.markAsPristine();
+  }
 }

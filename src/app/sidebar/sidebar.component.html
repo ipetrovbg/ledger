@@ -1,11 +1,37 @@
-<ul class="side-navigation">
-  <li timeout="700" color="#4E626A" appRipple>
-    <a routerLink="/layout/dashboard">Dashboard</a>
+<ul class="side-navigation" *ngIf="(user | async).user.id">
+  <li>
+    <div class="brand" [class]="(animate | async) === 'open' ? 'brand open' : 'brand close'">
+      <p>LEDGER</p>
+      <button kendoButton [look]="'bare'" [icon]="'menu'" (click)="toggleSidebar()"></button>
+    </div>
   </li>
-  <li timeout="700" color="#4E626A" appRipple>
-    <a routerLink="/layout/profile">Profile</a>
+  <li timeout="700" color="#dadada" appRipple>
+    <a routerLinkActive="active"  class="route" routerLink="/layout/dashboard" *ngIf="(animate | async) === 'open'">
+      <span class="icon k-icon k-i-group"></span>
+      <span>Dashboard</span>
+    </a>
+    <a routerLinkActive="active" routerLink="/layout/dashboard" *ngIf="(animate | async) === 'close'" class="closed user pull-right">
+      <span class="k-icon k-i-group"></span>
+    </a>
   </li>
-  <li timeout="700" color="#4E626A" appRipple>
-    <a routerLink="/layout/ledgers">Ledgers</a>
+  <li timeout="700" color="#dadada" appRipple>
+    <a routerLinkActive="active" class="route" routerLink="/layout/ledgers" *ngIf="(animate | async) === 'open'">
+      <span class="icon k-icon k-i-dictionary-add"></span>
+      <span>Ledgers</span>
+    </a>
+    <a routerLinkActive="active" routerLink="/layout/ledgers" *ngIf="(animate | async) === 'close'" class="closed user pull-right">
+      <span class="k-icon k-i-dictionary-add"></span>
+    </a>
+  </li>
+</ul>
+<ul class="bottom-navigation" *ngIf="(user | async).user.id">
+  <li timeout="700" color="#dadada" appRipple>
+    <a routerLinkActive="active" class="route" routerLink="/layout/profile" *ngIf="(animate | async) === 'open'">
+      <span class="icon k-icon k-i-user" [title]="(user | async).user.name"></span>
+      <span>{{ (user | async).user.name }}</span>
+    </a>
+    <a routerLinkActive="active" routerLink="/layout/profile" *ngIf="(animate | async) === 'close'" class="closed user pull-right">
+      <span class="k-icon k-i-user" [title]="(user | async).user.name"></span>
+    </a>
   </li>
 </ul>

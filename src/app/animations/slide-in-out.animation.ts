@@ -7,7 +7,7 @@ export const slideInOutAnimation =
       marginLeft: 0
     })),
     state('close', style({
-      marginLeft: '-50%',
+      marginLeft: '-150px',
     })),
     transition('open <=> close', animate('.5s ease-in-out'))
 
