@@ -1,9 +1,8 @@
 .router-content {
-  overflow: hidden;
+  width: 96.3%;
 }
 .loading {
-  height: calc(100vh - 100px);
-  width:100%;
+  height: calc(100vh - 150px);
   display: flex;
   align-items: center;
   text-align: center;
@@ -11,5 +10,6 @@
 }
 .content {
   padding: 5px;
-  margin:10px;
+  position: relative;
+  display: block;
 }

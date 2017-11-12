@@ -1,10 +1,11 @@
 :host {
   width: 200px;
   height: 100vh;
-  position: relative;
+  position: fixed;
   background-color: #505D6A;
   color: #fff;
   float: left;
+  top: 0;
   display: flex;
   min-height: 100vh;
   flex-direction: column;
@@ -63,9 +64,9 @@
   justify-content: left;
   vertical-align: middle;
 }
-.user.closed {
+/* .user.closed {
   padding: 17px!important;
-}
+} */
 .icon {
   margin-right:20px;
 }

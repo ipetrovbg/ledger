@@ -6,15 +6,18 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/mergeMap';
 import { Subscription } from "rxjs/Subscription";
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
+import { slideInOut } from 'app/animations/slide-in-out.animation';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.css'],
+  animations: [slideInOut],
   changeDetection: ChangeDetectionStrategy.Default
 })
 export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
   loader: Observable<boolean>;
+  animate: Observable<string>;
 
   visible: BehaviorSubject<boolean> = new BehaviorSubject(true);
 
@@ -23,6 +26,7 @@ export class LayoutComponent implements OnInit, OnDestroy, AfterViewInit {
     private store: Store<IAppState>
   ) {
     this.loader = store.select(state => state.ui.route.loading);
+    this.animate = this.store.select(state => state.ui.sidebar.state);
   }
 
   ngOnInit() {

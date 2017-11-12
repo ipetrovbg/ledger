@@ -11,7 +11,7 @@ import { getState, IAppState } from '../store/app.state';
 import { Store } from '@ngrx/store';
 import { CLOSE_SIDEBAR, OPEN_SIDEBAR, ROUTE_LOADING, UI_LOADING } from '../store/ui/ui.reducer';
 import { SharedModule } from '../shared/shared.module';
-import { LedgerComponent } from '../ledger/ledger.component';
+import { LedgerComponent } from './ledger/ledger.component';
 import { FETCH_SETTINGS } from "../store/user/user.reducer";
 import { HotkeyService } from '../shared/services/hotkey.service';
 
@@ -45,7 +45,7 @@ export class LayoutModule {
             this.store.dispatch({ type: FETCH_SETTINGS });
             this.store.dispatch({ type: UI_LOADING, payload: true });
           }
-        }, 500);
+        }, 200);
       }
 
       if ((route instanceof GuardsCheckEnd) && (route.url.indexOf('/layout') > -1 && route.shouldActivate)) {

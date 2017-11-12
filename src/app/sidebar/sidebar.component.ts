@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import { slideInOutAnimation } from '../animations/slide-in-out.animation';
+import { slideInOutAnimation, enterAnimation } from '../animations/slide-in-out.animation';
 import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { IAppState, getState } from "../store/app.state";
 import { Store } from "@ngrx/store";
@@ -12,7 +12,7 @@ import { CLOSE_SIDEBAR, OPEN_SIDEBAR } from "../store/ui/ui.reducer";
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
-  animations: [slideInOutAnimation],
+  animations: [slideInOutAnimation, enterAnimation],
   host: { '[@slideInOutAnimation]': 'animate | async' }
 })
 export class SidebarComponent {

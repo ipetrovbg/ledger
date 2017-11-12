@@ -11,11 +11,13 @@ import * as moment from 'moment';
 
 import { IAppState } from '../../store/app.state';
 import { PROFILE_FORM_LOADING, PROFILE_SUBMIT } from '../../store/pages/pages.reducer';
+import { showAnimation } from 'app/animations/slide-in-out.animation';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css'],
+  animations: [showAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
@@ -102,7 +104,7 @@ export class ProfileComponent implements AfterViewInit, OnDestroy, OnInit {
 
   ngAfterViewInit() {
     this.subscription
-      .add(this.store.subscribe(state => setTimeout(() => this.visible.next((state.ui.loading)), 501)));
+      .add(this.store.subscribe(state => setTimeout(() => this.visible.next((state.ui.loading)), 205)));
   }
 
   ngOnDestroy() {

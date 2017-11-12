@@ -4,12 +4,14 @@ import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subscription } from 'rxjs/Subscription';
 import { products } from './products';
+import { showAnimation } from 'app/animations/slide-in-out.animation';
 
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css'],
+  animations: [showAnimation],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements AfterViewInit, OnDestroy {
@@ -22,7 +24,7 @@ export class DashboardComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.subscription
-      .add(this.store.subscribe(state => setTimeout(() => this.visible.next((state.ui.loading)), 501)));
+      .add(this.store.subscribe(state => setTimeout(() => this.visible.next((state.ui.loading)), 205)));
   }
 
   ngOnDestroy() {

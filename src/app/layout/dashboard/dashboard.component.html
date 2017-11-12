@@ -1,19 +1,32 @@
-<div class="widget" *ngIf="!(visible | async)">
-  <kendo-grid [data]="gridData" [height]="500">
-    <kendo-grid-column field="ProductID" title="ID" width="40">
-    </kendo-grid-column>
-    <kendo-grid-column field="ProductName" title="Name">
-    </kendo-grid-column>
-    <kendo-grid-column field="Category.CategoryName" title="Category">
-    </kendo-grid-column>
-    <kendo-grid-column field="UnitPrice" title="Price" width="100">
-    </kendo-grid-column>
-    <kendo-grid-column field="UnitsInStock" title="In stock" width="100">
-    </kendo-grid-column>
-    <kendo-grid-column field="Discontinued" title="Discontinued" width="100">
-      <ng-template kendoGridCellTemplate let-dataItem>
-        <input type="checkbox" [checked]="dataItem.Discontinued" disabled/>
-      </ng-template>
-    </kendo-grid-column>
-  </kendo-grid>
+<div class="" *ngIf="!(visible | async)">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <h2 class="title" *ngIf="true" [@showAnimation]><span class="k-icon k-i-group"></span> Dashboard</h2>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        <div class="widget">
+          <kendo-grid [data]="gridData" [height]="500">
+            <kendo-grid-column field="ProductID" title="ID" width="40">
+            </kendo-grid-column>
+            <kendo-grid-column field="ProductName" title="Name">
+            </kendo-grid-column>
+            <kendo-grid-column field="Category.CategoryName" title="Category">
+            </kendo-grid-column>
+            <kendo-grid-column field="UnitPrice" title="Price" width="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="UnitsInStock" title="In stock" width="100">
+            </kendo-grid-column>
+            <kendo-grid-column field="Discontinued" title="Discontinued" width="100">
+              <ng-template kendoGridCellTemplate let-dataItem>
+                <input type="checkbox" [checked]="dataItem.Discontinued" disabled/>
+              </ng-template>
+            </kendo-grid-column>
+          </kendo-grid>
+        </div>
+    </div>
+  </div>
 </div>

@@ -5,7 +5,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { LayoutComponent } from './layout.component';
 import { LayoutGuard } from './layout.guard';
 import { ProfileComponent } from './profile/profile.component';
-import { LedgerComponent } from '../ledger/ledger.component';
+import { LedgerComponent } from './ledger/ledger.component';
 
 
 const routes: Routes = [

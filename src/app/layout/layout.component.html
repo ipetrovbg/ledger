@@ -1,8 +1,8 @@
 <div class="router-content">
-  <div class="loading" *ngIf="(loader | async);">
+  <div class="loading" *ngIf="(loader | async);" [@slideInOut]="animate | async">
     <span class="k-icon k-i-loading" style="font-size: 50px;"></span>
   </div>
-  <div class="content">
+  <div class="content" [@slideInOut]="animate | async">
     <router-outlet></router-outlet>
   </div>
 </div>

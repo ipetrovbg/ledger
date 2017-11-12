@@ -1,4 +1,11 @@
-<div class="container" *ngIf="!(visible |  async)">
+<div class="full-width" *ngIf="!(visible |  async)">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <h2 class="title" *ngIf="true" [@showAnimation]><span class="k-icon k-i-user"></span> Profile</h2>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-md-4">
       <div class="widget">
